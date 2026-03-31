@@ -1,169 +1,131 @@
 # KataPlan – Participation Finance Simulator
 
-A multi-page Turkish web application that simulates **Murabaha-based (interest-free) financing**. Built as a portfolio project targeting participation banking / fintech roles.
+A modern, precision-first web application designed to simulate Murabaha-based (interest-free) financing for the Turkish participation banking ecosystem.
 
+![Language](https://img.shields.io/badge/language-Javascript%20%2F%20Python-blue)
+![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)
+![Flask](https://img.shields.io/badge/Flask-API-black?logo=flask&logoColor=white)
 ![Status](https://img.shields.io/badge/status-active-brightgreen)
-![Language](https://img.shields.io/badge/language-Turkish-blue)
-![License](https://img.shields.io/badge/license-MIT-lightgrey)
 
 ---
 
-## 🏦 What is Murabaha?
+## 🚀 Project Vision
 
-Murabaha is the core financing model used in participation (Islamic) banking. Instead of charging interest:
-
-1. The bank purchases the product on behalf of the customer.
-2. The bank resells it at a disclosed **profit margin** (kâr payı).
-3. The customer pays in fixed monthly installments over the agreed period.
-
-**Formula used in this app:**
-```
-Total Cost    = Product Price × (1 + Profit Rate / 100)
-Monthly Payment = Total Cost ÷ Months
-Total Profit    = Product Price × (Profit Rate / 100)
-```
+KataPlan is more than just a calculator—it is a comprehensive **fintech product** engineered to model interest-free financing accurately. It features high-precision calculations, interactive data visualizations, and educational comparisons, enabling users to explore alternative financing models transparently.
 
 ---
 
-## 🚀 Features
+## ✨ Core Features
 
-| Feature | Details |
-|---------|---------|
-| Multi-page React app | 5 pages with React Router v6 |
-| Real-time calculation | Updates on input change with 400ms debounce |
-| Financial precision | Python `decimal` module – no floating-point errors |
-| Loan comparison | Murabaha vs. Conventional side-by-side |
-| Educational content | Murabaha, profit vs. interest, Turkey history |
-| Full Turkish UI | All labels, copy, and messages in Turkish |
-| Responsive design | Mobile-friendly glassmorphism layout |
+*   **Murabaha-Based Calculation Engine:** Accurately calculates fixed profit margins with zero variable interest.
+*   **Precision-First Backend:** Fully leverages Python's `decimal` module to eliminate floating-point arithmetic errors and ensure financial reliability.
+*   **Real-Time Simulation:** Multi-page React application with sub-second debounce API responses.
+*   **Educational Comparison:** Side-by-side structural and financial cost analysis comparing Participation Finance (Murabaha) against Conventional Loans (Interest).
+*   **Responsive Fintech UI:** Built with custom Tailwind CSS v4 featuring glassmorphism cards, dynamic SVG visualizations, and seamless mobile responsiveness.
 
 ---
 
-## 📁 Project Structure
+## 🏦 Domain Knowledge: Why Murabaha?
 
-```
-/kataplan
-├── /backend
-│   ├── app.py              # Flask API – POST /api/calculate
-│   ├── logic.py            # Murabaha engine + input validation
-│   └── requirements.txt
-├── /frontend
-│   ├── /src
-│   │   ├── App.jsx         # BrowserRouter + 5 routes
-│   │   ├── index.css       # Tailwind v4 + design system
-│   │   ├── main.jsx
-│   │   ├── /components
-│   │   │   └── Navbar.jsx  # Sticky responsive navbar
-│   │   └── /pages
-│   │       ├── AnaSayfa.jsx        # Home page
-│   │       ├── HesaplaPage.jsx     # Calculator
-│   │       ├── KarsilastirPage.jsx # Comparison
-│   │       ├── NedirPage.jsx       # Educational
-│   │       └── HakkindaPage.jsx    # About
-│   ├── index.html
-│   ├── vite.config.js
-│   └── package.json
-└── README.md
-```
+In conventional banking, profit is derived from time-based **interest (Riba)** charged on money lent. 
 
----
+Participation finance utilizes the **Murabaha** model:
+1. The bank purchases an asset requested by the customer.
+2. The bank resells the tangible asset to the customer with an agreed, transparent **fixed profit margin**.
+3. The customer repays this debt in predefined installments.
 
-## 🗺️ Pages
-
-| Route | Turkish Name | Description |
-|-------|-------------|-------------|
-| `/` | Ana Sayfa | Hero, formula card, feature cards, CTA |
-| `/hesapla` | Finansman Hesapla | Calculator with live results + installment table |
-| `/karsilastir` | Karşılaştırma | Murabaha vs Conventional loan comparison |
-| `/nedir` | Katılım Bankacılığı | Educational content about Islamic finance |
-| `/hakkinda` | Hakkında | Project info, tech stack, architecture |
+This structure eliminates compound interest risk, ensures transparency, and anchors financial transactions to real-world assets.
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | React 18 + Vite |
-| Routing | React Router v6 |
-| Styling | Tailwind CSS v4 |
-| HTTP Client | Axios |
-| Backend | Python 3 + Flask |
-| CORS | flask-cors |
-| Precision | Python `decimal` module |
+### Frontend
+*   **React 18** (Vite build setup)
+*   **React Router v6** (Multi-page SPA navigation)
+*   **Tailwind CSS v4** (Custom tokens, gradients, and animations)
+*   **Axios** (API communication)
+
+### Backend
+*   **Python 3.9+**
+*   **Flask** (RESTful API architecture)
+*   **Flask-CORS** (Handling cross-origin resource sharing)
+*   **Python `decimal`** (Strict financial precision)
 
 ---
 
-## 📡 API Reference
+## 📁 System Architecture
 
-### `POST /api/calculate`
-
-**Request:**
-```json
-{
-  "product_price": "250000",
-  "months": 36,
-  "profit_rate": "18"
-}
-```
-
-**Success Response (200):**
-```json
-{
-  "product_price":    "250000",
-  "total_payment":    "295000.00",
-  "monthly_payment":  "8194.44",
-  "total_profit":     "45000.00",
-  "months":           36,
-  "profit_rate":      "18",
-  "installments": [
-    { "month": 1, "payment": "8194.44", "remaining_balance": "286805.56" },
-    ...
-  ]
-}
-```
-
-**Error Response (422):**
-```json
-{ "errors": ["Ürün fiyatı sıfırdan büyük olmalıdır."] }
+```text
+/kataplan
+├── /backend
+│   ├── app.py              # Flask API Entry Point
+│   ├── logic.py            # Murabaha Mathematics Engine
+│   └── requirements.txt
+├── /frontend
+│   ├── /src
+│   │   ├── App.jsx         # Routing & Main Layout
+│   │   ├── index.css       # Design System CSS
+│   │   ├── /components     # Reusable UI Elements
+│   │   └── /pages          # Calculator, Comparison, Educational Views
+│   ├── index.html
+│   └── vite.config.js
+├── .gitignore
+└── README.md
 ```
 
 ---
 
-## ⚡ Quick Start
+## ⚙️ Installation & Setup
 
-### Prerequisites
-- Python 3.9+
-- Node.js 18+
+### Requirements
+*   Node.js 18+
+*   Python 3.9+
 
-### 1. Backend
+### 1. Starting the Backend
+
+Access the backend directory, set up a virtual environment, install dependencies, and run the Flask server:
 
 ```bash
 cd backend
-python -m pip install -r requirements.txt
-python app.py
-# → Running on http://localhost:5000
-```
+python -m venv venv
 
-### 2. Frontend
+# Windows
+venv\Scripts\activate
+# Mac/Linux
+source venv/bin/activate
+
+pip install -r requirements.txt
+python app.py
+```
+*The backend will run on `http://localhost:5000`.*
+
+### 2. Starting the Frontend
+
+In a new terminal, access the frontend directory, install npm packages, and start Vite:
 
 ```bash
 cd frontend
 npm install
 npm run dev
-# → Running on http://localhost:5173
 ```
-
-Open `http://localhost:5173` – API calls are proxied to the Flask backend automatically.
-
----
-
-## ⚠️ Disclaimer
-
-This application is built for **educational and portfolio purposes only**. It does not constitute financial advice. Calculations use a simplified Murabaha model. Do not make real financial decisions based on this tool.
+*The frontend will run on `http://localhost:5173` (requests to `/api` are automatically proxied).*
 
 ---
 
-## 📄 License
+## 📸 Screenshots
 
-MIT
+*(Add screenshots of the application here to showcase the beautiful UI and mobile responsiveness)*
+
+![Dashboard View](#)
+![Comparison View](#)
+![Mobile Layout](#)
+
+---
+
+## 👨‍💻 Author
+
+**Doğukan Toprak**
+*3rd-Year Software Engineering Student | Full-Stack Developer*
+
+Built as an advanced portfolio piece to demonstrate a deep understanding of software engineering patterns, algorithmic precision, modern React architecture, and Islamic fintech domain knowledge.
