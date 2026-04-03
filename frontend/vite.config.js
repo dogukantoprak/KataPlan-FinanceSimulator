@@ -12,7 +12,7 @@ export default defineConfig({
       manifest: {
         name: 'KataPlan',
         short_name: 'KataPlan',
-        description: 'Participation Finance Simulator',
+        description: 'Digital participation finance quote prototype',
         theme_color: '#060e1a',
         background_color: '#060e1a',
         display: 'standalone',
@@ -20,6 +20,9 @@ export default defineConfig({
     })
   ],
   server: {
+    host: 'localhost',
+    port: 5173,
+    strictPort: true,
     proxy: {
       '/api': 'http://localhost:5000',
     },

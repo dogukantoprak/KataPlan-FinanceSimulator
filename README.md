@@ -1,134 +1,171 @@
-# KataPlan – Participation Finance Simulator
+# KataPlan
 
-A modern, precision-first web application designed to simulate Murabaha-based (interest-free) financing for the Turkish participation banking ecosystem.
+KataPlan is a portfolio-grade participation finance prototype that models a digital pre-application journey instead of a single financing calculator.
 
-![Language](https://img.shields.io/badge/language-Javascript%20%2F%20Python-blue)
-![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)
-![Flask](https://img.shields.io/badge/Flask-API-black?logo=flask&logoColor=white)
-![Status](https://img.shields.io/badge/status-active-brightgreen)
+It focuses on Murabaha-style pricing with:
 
----
+- product-based policy rules
+- affordability and eligibility signals
+- transparent cost breakdowns
+- document checklist and next-step guidance
+- reference comparison against a conventional scenario
+- saved scenarios and printable quote output
+- OpenAPI-visible backend endpoints
 
-## 🚀 Project Vision
+## Product Highlights
 
-KataPlan is more than just a calculator—it is a comprehensive **fintech product** engineered to model interest-free financing accurately. It features high-precision calculations, interactive data visualizations, and educational comparisons, enabling users to explore alternative financing models transparently.
+- Quote flow: Generate an indicative participation finance offer with live pricing, policy checks, and payment schedule.
+- Comparison flow: Compare the same scenario against a reference conventional financing benchmark.
+- Product education: Explain how Murabaha pricing, rule visibility, and affordability logic are represented in the product.
+- Multi-product support: Vehicle, home improvement, education, and technology purchase scenarios.
 
----
+## Screenshots
 
-## ✨ Core Features
+### Home
 
-*   **Murabaha-Based Calculation Engine:** Accurately calculates fixed profit margins with zero variable interest.
-*   **Precision-First Backend:** Fully leverages Python's `decimal` module to eliminate floating-point arithmetic errors and ensure financial reliability.
-*   **Real-Time Simulation:** Multi-page React application with sub-second debounce API responses.
-*   **Educational Comparison:** Side-by-side structural and financial cost analysis comparing Participation Finance (Murabaha) against Conventional Loans (Interest).
-*   **Responsive Fintech UI:** Built with custom Tailwind CSS v4 featuring glassmorphism cards, dynamic SVG visualizations, and seamless mobile responsiveness.
+![KataPlan home screen](docs/home.png)
 
----
+### Quote Flow
 
-## 🏦 Domain Knowledge: Why Murabaha?
+![KataPlan quote flow](docs/hesapla.png)
 
-In conventional banking, profit is derived from time-based **interest (Riba)** charged on money lent. 
+### Reference Comparison
 
-Participation finance utilizes the **Murabaha** model:
-1. The bank purchases an asset requested by the customer.
-2. The bank resells the tangible asset to the customer with an agreed, transparent **fixed profit margin**.
-3. The customer repays this debt in predefined installments.
+![KataPlan comparison flow](docs/karsilastir.png)
 
-This structure eliminates compound interest risk, ensures transparency, and anchors financial transactions to real-world assets.
-
----
-
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
-*   **React 18** (Vite build setup)
-*   **React Router v6** (Multi-page SPA navigation)
-*   **Tailwind CSS v4** (Custom tokens, gradients, and animations)
-*   **Axios** (API communication)
+
+- React 19
+- Vite
+- React Router
+- Axios
+- Tailwind CSS v4
 
 ### Backend
-*   **Python 3.9+**
-*   **Flask** (RESTful API architecture)
-*   **Flask-CORS** (Handling cross-origin resource sharing)
-*   **Python `decimal`** (Strict financial precision)
 
----
+- Python
+- Flask
+- Flask-CORS
+- Python `decimal`
 
-## 📁 System Architecture
+### Quality
+
+- Python `unittest`
+- OpenAPI JSON endpoint
+- Vite PWA plugin
+
+## API Surface
+
+### `GET /api/health`
+
+Simple health check.
+
+### `GET /api/products`
+
+Returns supported products, defaults, policy hints, channels, and customer segment options.
+
+### `POST /api/calculate`
+
+Generates an indicative quote.
+
+Example payload:
+
+```json
+{
+  "product_type": "vehicle",
+  "asset_condition": "new",
+  "asset_price": 950000,
+  "down_payment": 250000,
+  "months": 24,
+  "monthly_income": 135000,
+  "existing_commitments": 10000,
+  "channel": "mobile",
+  "customer_segment": "salary"
+}
+```
+
+### `GET /api/openapi.json`
+
+Returns a lightweight OpenAPI document for the current API contract.
+
+## Project Structure
 
 ```text
-/kataplan
-├── /backend
-│   ├── app.py              # Flask API Entry Point
-│   ├── logic.py            # Murabaha Mathematics Engine
-│   └── requirements.txt
-├── /frontend
-│   ├── /src
-│   │   ├── App.jsx         # Routing & Main Layout
-│   │   ├── index.css       # Design System CSS
-│   │   ├── /components     # Reusable UI Elements
-│   │   └── /pages          # Calculator, Comparison, Educational Views
-│   ├── index.html
+Kataplan/
+├── backend/
+│   ├── app.py
+│   ├── logic.py
+│   ├── requirements.txt
+│   ├── run_server.py
+│   └── test_api.py
+├── docs/
+│   ├── hesapla.png
+│   ├── home.png
+│   └── karsilastir.png
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── lib/
+│   │   └── pages/
+│   ├── package.json
 │   └── vite.config.js
-├── .gitignore
+├── dev.ps1
 └── README.md
 ```
 
----
+## Local Setup
 
-## ⚙️ Installation & Setup
+### One-Command Dev Start (Windows PowerShell)
 
-### Requirements
-*   Node.js 18+
-*   Python 3.9+
+From the project root:
 
-### 1. Starting the Backend
+```powershell
+.\dev.ps1
+```
 
-Access the backend directory, set up a virtual environment, install dependencies, and run the Flask server:
+This starts the managed backend and frontend dev servers and verifies:
+
+- frontend at `http://localhost:5173`
+- backend health at `http://127.0.0.1:5000/api/health`
+
+Useful commands:
+
+```powershell
+.\dev.ps1 -Status
+.\dev.ps1 -Stop
+```
+
+### Manual Backend Setup
 
 ```bash
 cd backend
-python -m venv venv
-
-# Windows
-venv\Scripts\activate
-# Mac/Linux
-source venv/bin/activate
-
+python -m venv .venv
+.venv\Scripts\activate
 pip install -r requirements.txt
 python app.py
 ```
-*The backend will run on `http://localhost:5000`.*
 
-### 2. Starting the Frontend
-
-In a new terminal, access the frontend directory, install npm packages, and start Vite:
+### Manual Frontend Setup
 
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-*The frontend will run on `http://localhost:5173` (requests to `/api` are automatically proxied).*
 
----
+## Test
 
-## 📸 Screenshots
+From the project root:
 
-### 1. Dashboard (Main Page)
-![Ana Sayfa](docs/home.png)
+```bash
+.\.venv\Scripts\python.exe -m unittest backend.test_api
+cd frontend && npm run build
+```
 
-### 2. Live Calculator (Murabaha Installment Schedule)
-![Hesaplama](docs/hesapla.png)
+## Notes
 
-### 3. Comparison Engine (Traditional Loan vs Murabaha)
-![Karşılaştırma](docs/karsilastir.png)
-
----
-
-## 👨‍💻 Author
-
-**Doğukan Toprak**
-*3rd-Year Software Engineering Student | Full-Stack Developer*
-
-Built as an advanced portfolio piece to demonstrate a deep understanding of software engineering patterns, algorithmic precision, modern React architecture, and Islamic fintech domain knowledge.
+- This project is educational and portfolio-oriented.
+- It does not replace real credit, compliance, or allocation systems.
+- It is designed to demonstrate product thinking and engineering quality for participation finance use cases.
