@@ -103,11 +103,11 @@ export default function KarsilastirPage() {
     <>
       {/* ── Responsive rules ── */}
       <style>{`
-        /* Base: prevent any horizontal overflow */
-        .karsi-page { box-sizing: border-box; width: 100%; max-width: 100%; overflow-x: hidden; }
+        /* Base: Keep it modern and centered for web, prevent over-stretching */
+        .karsi-page { box-sizing: border-box; width: 100%; margin: 0 auto; overflow-x: hidden; }
 
-        /* Parameter grid: 3 cols on md+, 1 col on mobile */
-        .param-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        /* Parameter grid: 3 cols on md+, 1 col on mobile. Constrained maximum width for elegance */
+        .param-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 860px; }
 
         /* Cost cards: side-by-side on md+, stacked on mobile */
         .cost-grid  { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
@@ -149,7 +149,7 @@ export default function KarsilastirPage() {
         }
       `}</style>
 
-      <div className="page karsi-page">
+      <div className="page karsi-page" style={{ maxWidth: "1080px" }}>
         {/* ── Page Header ── */}
         <div style={{ marginBottom: "2rem" }}>
           <div className="section-tag" style={{ marginBottom: ".75rem" }}>Analiz</div>

@@ -1,16 +1,33 @@
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
-
-const links = [
-  { to: "/",             label: "Ana Sayfa" },
-  { to: "/hesapla",      label: "Finansman Hesapla" },
-  { to: "/karsilastir",  label: "Karşılaştırma" },
-  { to: "/nedir",        label: "Katılım Bankacılığı" },
-  { to: "/hakkinda",     label: "Hakkında" },
-];
+import { useTranslation } from "react-i18next";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const { t, i18n } = useTranslation();
+
+  const links = [
+    { to: "/",             label: t("nav.home") },
+    { to: "/hesapla",      label: t("nav.calculate") },
+    { to: "/karsilastir",  label: t("nav.compare") },
+    { to: "/nedir",        label: "Katılım Bankacılığı" },
+    { to: "/hakkinda",     label: t("nav.about") },
+  ];
+
+  const toggleLanguage = () => {
+    const nextLang = i18n.language === "tr" ? "en" : "tr";
+    i18n.changeLanguage(nextLang);
+  };
+
+  const LangButton = () => (
+    <button onClick={toggleLanguage} style={{
+      background: "rgba(16,185,129,.1)", border: "1px solid rgba(16,185,129,.2)",
+      color: "var(--color-emerald-400)", padding: ".35rem .6rem", borderRadius: ".5rem",
+      fontSize: ".75rem", fontWeight: 700, cursor: "pointer", marginLeft: ".5rem"
+    }}>
+      {i18n.language.toUpperCase()}
+    </button>
+  );
 
   return (
     <nav className="navbar">
@@ -36,22 +53,26 @@ export default function Navbar() {
                 {l.label}
               </NavLink>
             ))}
+            <LangButton />
           </div>
 
           {/* Mobile hamburger */}
-          <button
-            onClick={() => setOpen((o) => !o)}
-            className="mobile-menu-btn"
-            aria-label="Menü"
-            style={{
-              display: "none", flexDirection: "column", gap: "4px",
-              background: "none", border: "none", cursor: "pointer", padding: "6px",
-            }}
-          >
-            {[0,1,2].map((i) => (
-              <span key={i} style={{ display: "block", width: "22px", height: "2px", background: "#94a3b8", borderRadius: "2px" }} />
-            ))}
-          </button>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }} className="mobile-only-flex">
+            <div className="mobile-lang-wrapper" style={{ display: "none" }}><LangButton /></div>
+            <button
+              onClick={() => setOpen((o) => !o)}
+              className="mobile-menu-btn"
+              aria-label="Menü"
+              style={{
+                display: "none", flexDirection: "column", gap: "4px",
+                background: "none", border: "none", cursor: "pointer", padding: "6px",
+              }}
+            >
+              {[0,1,2].map((i) => (
+                <span key={i} style={{ display: "block", width: "22px", height: "2px", background: "#94a3b8", borderRadius: "2px" }} />
+              ))}
+            </button>
+          </div>
         </div>
 
         {/* Mobile dropdown */}
@@ -77,6 +98,7 @@ export default function Navbar() {
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
           .mobile-menu-btn { display: flex !important; }
+          .mobile-lang-wrapper { display: block !important; }
         }
       `}</style>
     </nav>

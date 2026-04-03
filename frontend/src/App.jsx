@@ -5,8 +5,10 @@ import HesaplaPage    from "./pages/HesaplaPage";
 import KarsilastirPage from "./pages/KarsilastirPage";
 import NedirPage      from "./pages/NedirPage";
 import HakkindaPage   from "./pages/HakkindaPage";
+import { useTranslation } from "react-i18next";
 
 export default function App() {
+  const { t } = useTranslation();
   return (
     <BrowserRouter>
       <Navbar />
@@ -29,7 +31,7 @@ export default function App() {
       {/* Global footer */}
       <footer style={{ borderTop: "1px solid rgba(148,163,184,.08)", padding: "1.25rem", textAlign: "center" }}>
         <p style={{ fontSize: ".78rem", color: "var(--color-slate-600)" }}>
-          KataPlan © {new Date().getFullYear()} — Eğitim Amaçlı Portfolyo Projesi. Finansal Tavsiye Değildir.
+          {t("app.footer", { year: new Date().getFullYear() })}
         </p>
       </footer>
     </BrowserRouter>

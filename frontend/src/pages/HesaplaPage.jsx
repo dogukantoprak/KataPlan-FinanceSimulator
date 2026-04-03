@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 
 const API = "/api/calculate";
@@ -167,7 +168,14 @@ function EmptyState() {
 }
 
 export default function HesaplaPage() {
-  const [form, setForm]     = useState({ product_price: "", months: "12", profit_rate: "15" });
+  const [searchParams, setSearchParams] = useSearchParams();
+  
+  const [form, setForm] = useState(() => ({
+    product_price: searchParams.get("price") || "",
+    months: searchParams.get("months") || "12",
+    profit_rate: searchParams.get("rate") || "15",
+  }));
+  
   const [result, setResult] = useState(null);
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -175,6 +183,15 @@ export default function HesaplaPage() {
   const [tab, setTab]         = useState("plan"); // "plan" | "chart"
 
   const debForm = useDebounce(form, 420);
+
+  // Sync debounced form to URL
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (debForm.product_price) params.set("price", debForm.product_price);
+    if (debForm.months) params.set("months", debForm.months);
+    if (debForm.profit_rate) params.set("rate", debForm.profit_rate);
+    setSearchParams(params, { replace: true });
+  }, [debForm, setSearchParams]);
 
   const calculate = useCallback(async (data) => {
     if (!data.product_price) { setResult(null); setErrors([]); return; }

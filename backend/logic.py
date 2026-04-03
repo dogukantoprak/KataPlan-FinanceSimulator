@@ -4,6 +4,7 @@ Uses Python's decimal module for financial accuracy.
 """
 
 from decimal import Decimal, ROUND_HALF_UP, InvalidOperation
+from functools import lru_cache
 
 
 def validate_inputs(product_price, months, profit_rate):
@@ -47,6 +48,7 @@ def validate_inputs(product_price, months, profit_rate):
     return {"price": price, "months": month_count, "rate": rate}, None
 
 
+@lru_cache(maxsize=128)
 def calculate_murabaha(product_price, months, profit_rate):
     """
     Calculate Murabaha financing details.

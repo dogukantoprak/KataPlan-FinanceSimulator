@@ -69,18 +69,19 @@ body {
 
 /* ── Cards ── */
 .card {
-  background: linear-gradient(160deg, rgba(26,45,71,.8) 0%, rgba(17,31,53,.9) 100%);
-  backdrop-filter: blur(12px);
+  background: rgba(17,31,53,.6);
+  backdrop-filter: blur(16px);
   border: 1px solid rgba(148,163,184,.1);
   border-radius: 1rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,.15);
   transition: border-color .25s ease, box-shadow .25s ease, transform .2s ease;
 }
 .card:hover {
-  border-color: rgba(52,211,153,.2);
-  box-shadow: 0 8px 40px rgba(0,0,0,.35), 0 0 0 1px rgba(52,211,153,.05);
-  transform: translateY(-1px);
+  border-color: rgba(52,211,153,.25);
+  box-shadow: 0 12px 48px rgba(0,0,0,.45), 0 0 0 1px rgba(52,211,153,.05);
+  transform: translateY(-2px);
 }
-.card-lift:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(0,0,0,.4), 0 0 0 1px rgba(52,211,153,.08); }
+.card-lift:hover { transform: translateY(-4px); box-shadow: 0 20px 56px rgba(0,0,0,.5), 0 0 0 1px rgba(52,211,153,.1); }
 
 .card-solid {
   background: var(--color-navy-800);
@@ -235,3 +236,18 @@ input[type=number]::-webkit-outer-spin-button { opacity:.4; }
 /* ── Progress bar ── */
 .progress-track { height: 6px; border-radius: 3px; background: rgba(148,163,184,.1); overflow: hidden; }
 .progress-fill  { height: 100%; border-radius: 3px; transition: width .6s cubic-bezier(.4,0,.2,1); }
+
+/* ── Mobile Optimization (Responsive Data Tables) ── */
+.table-responsive-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 1rem;
+}
+.data-table {
+  min-width: 600px; /* Forces horizontal scroll on narrow screens instead of breaking layout */
+}
+@media (max-width: 720px) {
+  .stat-card p:last-child {
+    font-size: 1.25rem !important; /* clamp */
+  }
+}
