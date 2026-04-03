@@ -115,11 +115,14 @@ npm run dev
 
 ## 📸 Screenshots
 
-*(Add screenshots of the application here to showcase the beautiful UI and mobile responsiveness)*
+### 1. Dashboard (Main Page)
+![Ana Sayfa](docs/home.png)
 
-![Dashboard View](#)
-![Comparison View](#)
-![Mobile Layout](#)
+### 2. Live Calculator (Murabaha Installment Schedule)
+![Hesaplama](docs/hesapla.png)
+
+### 3. Comparison Engine (Traditional Loan vs Murabaha)
+![Karşılaştırma](docs/karsilastir.png)
 
 ---
 
